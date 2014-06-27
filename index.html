@@ -4,13 +4,45 @@
   <title>Grade Parser</title>
 </head>
 <body>
+
+<h1>Grades!</h1>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="src/grade_parser.js"></script>
 
 <script>
 
-  // load the data and run it through your grade parser
-  // NOTE: you must run this via rubymine's open-in-browser, not by opening the file directly in chrome
+    // load the data and run it through your grade parser
+    // NOTE: you must run this via rubymine's open-in-browser, not by opening the file directly in chrome
+
+    var grades = [6,3,5,4,3,4,4,5];
+    var movements = GradeParser.getMovements(grades);
+
+    console.log(movements);
+
+    var slope = GradeParser.getSlope(movements);
+
+    console.log(slope);
+
+
+    $.getJSON("data/grades.json", function(data) {
+        var declineCount = 0;
+        $.each(data, function(i, e){
+            var studentName = i;
+            var studentGrades = e;
+            var studentMovement = GradeParser.getMovements(studentGrades);
+            var studentSlope = GradeParser.getSlope(studentMovement);
+
+            console.log(studentName, studentSlope, studentGrades, studentMovement);
+
+            if (studentSlope == "decline") {
+                declineCount++;
+            }
+        });
+        console.log(declineCount);
+    });
+
+
 
 </script>
 
